@@ -1,5 +1,7 @@
-./Client/build
+/Client/build
 
-./Server/build
+/Server/build
 
-./out
+/out
+
+/.idea
