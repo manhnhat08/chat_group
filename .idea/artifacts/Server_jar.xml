@@ -4,11 +4,11 @@
     <root id="archive" name="Server.jar">
       <element id="module-output" name="Server" />
       <element id="module-output" name="Message" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Client/Message.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/Message/dist/Message.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/Server/dist/lib/Message.jar" path-in-jar="/" />
-      <element id="library" level="project" name="Message4" />
-      <element id="library" level="project" name="Message" />
       <element id="extracted-dir" path="$PROJECT_DIR$/Client/dist/lib/Message.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Server/dist/lib/Message.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Server/Message.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>

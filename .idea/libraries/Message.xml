@@ -1,7 +1,7 @@
 <component name="libraryTable">
   <library name="Message">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/Server/Message.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Client/Message.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
