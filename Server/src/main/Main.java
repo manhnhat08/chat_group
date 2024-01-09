@@ -11,23 +11,30 @@ import java.util.ArrayList;
 import javax.swing.*;
 
 public class Main extends JFrame {
+    private JButton cmdStart;
+    private JButton cmdStop;
+    private JScrollPane jScrollPane;
+    private JLabel lbStatus;
+    private JTextArea txt;
+    private ServerSocket server;
+    private Thread run;
 
     public Main() {
         initComponents();
     }
 
-    @SuppressWarnings("unchecked")
     private void initComponents() {
 
         cmdStart = new JButton();
         cmdStop = new JButton();
-        jScrollPane1 = new JScrollPane();
+        jScrollPane = new JScrollPane();
         txt = new JTextArea();
         lbStatus = new JLabel();
 
+        setTitle("Server");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        cmdStart.setBackground(new Color(102, 255, 102));
+        cmdStart.setBackground(Color.GREEN);
         cmdStart.setText("Start Server");
         cmdStart.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
@@ -35,7 +42,7 @@ public class Main extends JFrame {
             }
         });
 
-        cmdStop.setBackground(new Color(255, 153, 153));
+        cmdStop.setBackground(Color.RED);
         cmdStop.setText("Stop Server");
         cmdStop.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
@@ -46,10 +53,10 @@ public class Main extends JFrame {
         txt.setEditable(false);
         txt.setColumns(20);
         txt.setRows(5);
-        jScrollPane1.setViewportView(txt);
+        jScrollPane.setViewportView(txt);
 
-        lbStatus.setForeground(new Color(255, 51, 51));
-        lbStatus.setText("Server is Stop");
+        lbStatus.setForeground(Color.RED);
+        lbStatus.setText("Server is stop");
 
         GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -58,14 +65,14 @@ public class Main extends JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(cmdStart)
                         .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cmdStop)
                         .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lbStatus, GroupLayout.PREFERRED_SIZE, 96, GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 332, Short.MAX_VALUE)))
+                        .addComponent(lbStatus, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 330, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -78,16 +85,13 @@ public class Main extends JFrame {
                         .addComponent(cmdStart)
                         .addComponent(cmdStop)))
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE, 407, Short.MAX_VALUE)
+                .addComponent(jScrollPane, GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         pack();
         setLocationRelativeTo(null);
     }
-
-    private ServerSocket server;
-    private Thread run;
 
     private void startServer() throws Exception {
         Method.setClients(new ArrayList<>());
@@ -111,8 +115,9 @@ public class Main extends JFrame {
                 try {
                     server = new ServerSocket(5000);
                     lbStatus.setForeground(Color.GREEN);
+                    lbStatus.setText("Server now running...");
                     Method.setTxt(txt);
-                    txt.setText("Server now Starting ...\n");
+                    txt.setText("Server now running...\n");
                     while (true) {
                         new Client(server.accept());
                     }
@@ -127,15 +132,17 @@ public class Main extends JFrame {
     private void stopServer() throws Exception {
         int c = JOptionPane.showConfirmDialog(this, "Are you sure to stop server now", "Stop Server", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (c == JOptionPane.YES_OPTION) {
-            lbStatus.setForeground(new Color(255, 51, 51));
-            txt.setText("Server now Stoped ...");
+            lbStatus.setForeground(Color.RED);
+            lbStatus.setText("Server now stopped...");
+            txt.setText("Server now stopped...");
             run.interrupt();
             server.close();
         }
     }
-    private void cmdStartActionPerformed(java.awt.event.ActionEvent evt) {
+    private void cmdStartActionPerformed(ActionEvent evt) {
         try {
             int c = JOptionPane.showConfirmDialog(this, "File in data will be delete when server is start", "Start Server", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+
             if (c == JOptionPane.YES_OPTION) {
                 startServer();
             }
@@ -153,7 +160,6 @@ public class Main extends JFrame {
     }
 
     public static void main(String[] args) {
-
         try {
             for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -177,10 +183,4 @@ public class Main extends JFrame {
             }
         });
     }
-
-    private JButton cmdStart;
-    private JButton cmdStop;
-    private JScrollPane jScrollPane1;
-    private JLabel lbStatus;
-    private JTextArea txt;
 }
