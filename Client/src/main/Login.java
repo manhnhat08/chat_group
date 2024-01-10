@@ -177,9 +177,9 @@ public class Login extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }
 
-    private void cmdLoginActionPerformed() {//GEN-FIRST:event_cmdLoginActionPerformed
+    private void cmdLoginActionPerformed() {
         try {
-            if (txtUser.getText().equals("") || !txtUser.getName().equals("have")) {
+            if (txtUser.getText().isEmpty() || !txtUser.getName().equals("have")) {
                 txtUser.grabFocus();
                 showStatus("Please input your user name");
             } else {
@@ -208,9 +208,9 @@ public class Login extends javax.swing.JFrame {
             System.out.println(e);
         }
 
-    }//GEN-LAST:event_cmdLoginActionPerformed
+    }
 
-    private void profileMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_borderMouseClicked
+    private void profileMouseClicked(java.awt.event.MouseEvent evt) {
         if (evt.getClickCount() == 2 && SwingUtilities.isLeftMouseButton(evt)) {
             JFileChooser ch = new JFileChooser();
             FileChooser preview = new FileChooser();
@@ -241,25 +241,25 @@ public class Login extends javax.swing.JFrame {
                 profile.setIcon(profile_pic);
             }
         }
-    }//GEN-LAST:event_borderMouseClicked
+    }
 
-    private void txtUserKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUserKeyTyped
+    private void txtUserKeyTyped(java.awt.event.KeyEvent evt) {
         if (evt.getKeyChar() == 10) {
             txtIP.grabFocus();
         }
         if (txtUser.getText().trim().length() >= 15) {
             evt.consume();
         }
-    }//GEN-LAST:event_txtUserKeyTyped
+    }
 
-    private void txtIPKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIPKeyTyped
+    private void txtIPKeyTyped(java.awt.event.KeyEvent evt) {
         if (evt.getKeyChar() == 10) {
             cmdLoginActionPerformed();
         }
-    }//GEN-LAST:event_txtIPKeyTyped
+    }
 
     private ImageIcon profile_pic;
-    private Timer timer = new Timer(5000, new ActionListener() {
+    private final Timer timer = new Timer(5000, new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent ae) {
             lbStatus.setText("");
@@ -302,7 +302,6 @@ public class Login extends javax.swing.JFrame {
         });
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
     private my_swing.Button cmdLogin;
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JPanel jPanel1;
@@ -310,5 +309,4 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel profile;
     private javax.swing.JTextField txtIP;
     private javax.swing.JTextField txtUser;
-    // End of variables declaration//GEN-END:variables
 }

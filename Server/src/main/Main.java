@@ -2,12 +2,14 @@ package main;
 
 import function.Client;
 import function.Method;
-import java.awt.Color;
+
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.net.ServerSocket;
 import java.util.ArrayList;
+import java.util.Objects;
 import javax.swing.*;
 
 public class Main extends JFrame {
@@ -30,7 +32,24 @@ public class Main extends JFrame {
         jScrollPane = new JScrollPane();
         txt = new JTextArea();
         lbStatus = new JLabel();
+        JPanel customPanel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                Graphics2D g2d = (Graphics2D) g;
+                int w = getWidth();
+                int h = getHeight();
+                Color color1 = new Color(0, 205, 205);
+                Color color2 = new Color(255, 248, 50);
+                GradientPaint gp = new GradientPaint(0, 0, color1, w, h, color2);
+                g2d.setPaint(gp);
+                g2d.fillRect(0, 0, w, h);
+            }
+        };
 
+        // Set the content pane of the JFrame to be the custom panel
+        setContentPane(customPanel);
+        setIconImage(new ImageIcon(Objects.requireNonNull(getClass().getResource("icon.png"))).getImage());
         setTitle("Server");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
@@ -51,6 +70,7 @@ public class Main extends JFrame {
         });
 
         txt.setEditable(false);
+        txt.setBackground(Color.LIGHT_GRAY);
         txt.setColumns(20);
         txt.setRows(5);
         jScrollPane.setViewportView(txt);
@@ -88,7 +108,6 @@ public class Main extends JFrame {
                 .addComponent(jScrollPane, GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
                 .addContainerGap())
         );
-
         pack();
         setLocationRelativeTo(null);
     }
@@ -167,13 +186,8 @@ public class Main extends JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
+                 UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         java.awt.EventQueue.invokeLater(new Runnable() {

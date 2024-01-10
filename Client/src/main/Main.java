@@ -3,12 +3,8 @@ package main;
 import function.FileChooser;
 import function.Method;
 import function.Scrolling;
-import java.awt.Adjustable;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
+
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.AdjustmentEvent;
@@ -16,15 +12,11 @@ import java.awt.event.AdjustmentListener;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.net.URL;
+import java.util.Objects;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
-import javax.swing.ImageIcon;
-import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
-import javax.swing.JScrollBar;
-import javax.swing.JScrollPane;
-import javax.swing.Timer;
+import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 import message.Message;
 import my_swing.Emoji;
@@ -59,7 +51,7 @@ public class Main extends javax.swing.JFrame {
     }
 
     private void open() {
-        setIconImage(new ImageIcon(getClass().getResource("/icon/icon.png")).getImage());
+        setIconImage(new ImageIcon(Objects.requireNonNull(getClass().getResource("/icon/icon.png"))).getImage());
         popUp.add(panel);
         popUp_emoji.add(panel_emoji);
         popMix.add(panelMix);
@@ -156,8 +148,8 @@ public class Main extends javax.swing.JFrame {
         panel.setBackground(new java.awt.Color(255, 255, 255));
 
         cmdPhoto.setBackground(new java.awt.Color(255, 255, 255));
-        cmdPhoto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/photo.png"))); // NOI18N
-        cmdPhoto.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/photo_click.png"))); // NOI18N
+        cmdPhoto.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource("/icon/photo.png")))); // NOI18N
+        cmdPhoto.setPressedIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource("/icon/photo_click.png")))); // NOI18N
         cmdPhoto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmdPhotoActionPerformed(evt);
@@ -165,8 +157,8 @@ public class Main extends javax.swing.JFrame {
         });
 
         cmdEmoji.setBackground(new java.awt.Color(255, 255, 255));
-        cmdEmoji.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/emoji.png"))); // NOI18N
-        cmdEmoji.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/emoji_click.png"))); // NOI18N
+        cmdEmoji.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource("/icon/emoji.png")))); // NOI18N
+        cmdEmoji.setPressedIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource("/icon/emoji_click.png")))); // NOI18N
         cmdEmoji.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmdEmojiActionPerformed(evt);
@@ -174,8 +166,8 @@ public class Main extends javax.swing.JFrame {
         });
 
         cmdFile.setBackground(new java.awt.Color(255, 255, 255));
-        cmdFile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/file.png"))); // NOI18N
-        cmdFile.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/file_click.png"))); // NOI18N
+        cmdFile.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource("/icon/file.png")))); // NOI18N
+        cmdFile.setPressedIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource("/icon/file_click.png")))); // NOI18N
         cmdFile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmdFileActionPerformed(evt);
@@ -183,8 +175,8 @@ public class Main extends javax.swing.JFrame {
         });
 
         cmdMicro.setBackground(new java.awt.Color(255, 255, 255));
-        cmdMicro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/microphone.png"))); // NOI18N
-        cmdMicro.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/microphone_click.png"))); // NOI18N
+        cmdMicro.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource("/icon/microphone.png")))); // NOI18N
+        cmdMicro.setPressedIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource("/icon/microphone_click.png")))); // NOI18N
         cmdMicro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmdMicroActionPerformed(evt);
@@ -361,7 +353,20 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        panel_bg.setBackground(new java.awt.Color(255, 255, 255));
+        panel_bg = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                Graphics2D g2d = (Graphics2D) g;
+                int w = getWidth();
+                int h = getHeight();
+                Color color1 = new Color(0, 205, 205);
+                Color color2 = new Color(255, 248, 50);
+                GradientPaint gp = new GradientPaint(0, 0, color1, w, h, color2);
+                g2d.setPaint(gp);
+                g2d.fillRect(0, 0, w, h);
+            }
+        };
 
         spChat.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         spChat.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -388,12 +393,12 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        cmdSend.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/send.png"))); // NOI18N
+        cmdSend.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource("/icon/send.png")))); // NOI18N
         cmdSend.setBorder(null);
         cmdSend.setContentAreaFilled(false);
         cmdSend.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         cmdSend.setFocusable(false);
-        cmdSend.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/send_click.png"))); // NOI18N
+        cmdSend.setPressedIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource("/icon/send_click.png")))); // NOI18N
         cmdSend.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmdSendActionPerformed(evt);
@@ -408,12 +413,12 @@ public class Main extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(102, 102, 102));
         jLabel2.setText("Real Chat");
 
-        cmdMore.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/more.png"))); // NOI18N
+        cmdMore.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource("/icon/more.png")))); // NOI18N
         cmdMore.setBorder(null);
         cmdMore.setContentAreaFilled(false);
         cmdMore.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         cmdMore.setFocusable(false);
-        cmdMore.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/more_click.png"))); // NOI18N
+        cmdMore.setPressedIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource("/icon/more_click.png")))); // NOI18N
         cmdMore.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmdMoreActionPerformed(evt);
@@ -501,7 +506,7 @@ public class Main extends javax.swing.JFrame {
 
         pack();
         setLocationRelativeTo(null);
-    }// </editor-fold>//GEN-END:initComponents
+    }
 
     private void setEmoji(Emoji_Group eg1) {
         panelEmoji.removeAll();
@@ -518,8 +523,8 @@ public class Main extends javax.swing.JFrame {
         panelEmoji.revalidate();
         panelEmoji.repaint();
     }
-    private void cmdSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdSendActionPerformed
-        if (txt.getName().equals("have") && !txt.getText().equals("")) {
+    private void cmdSendActionPerformed(java.awt.event.ActionEvent evt) {
+        if (txt.getName().equals("have") && !txt.getText().isEmpty()) {
             try {
                 Method.sendMessage(txt.getText().trim());
                 txt.setText("");
@@ -527,17 +532,17 @@ public class Main extends javax.swing.JFrame {
             } catch (Exception e) {
             }
         }
-    }//GEN-LAST:event_cmdSendActionPerformed
+    }
 
-    private void cmdMoreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdMoreActionPerformed
+    private void cmdMoreActionPerformed(java.awt.event.ActionEvent evt) {
         popUp.show(cmdMore, -10, -155);
-    }//GEN-LAST:event_cmdMoreActionPerformed
+    }
 
-    private void txtKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtKeyTyped
+    private void txtKeyTyped(java.awt.event.KeyEvent evt) {
         if (evt.getKeyChar() == 10) {
             cmdSendActionPerformed(null);
         }
-    }//GEN-LAST:event_txtKeyTyped
+    }
 
     private Thread th;
     private int currentID = 0;
@@ -584,40 +589,40 @@ public class Main extends javax.swing.JFrame {
         });
         th.start();
     }
-    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {
         start();
-    }//GEN-LAST:event_formWindowOpened
+    }
 
-    private void cmdPhotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdPhotoActionPerformed
+    private void cmdPhotoActionPerformed(java.awt.event.ActionEvent evt) {
         popUp.setVisible(false);
         setImage();
-    }//GEN-LAST:event_cmdPhotoActionPerformed
+    }
 
-    private void cmdEmojiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdEmojiActionPerformed
+    private void cmdEmojiActionPerformed(java.awt.event.ActionEvent evt) {
         popUp.setVisible(false);
         popUp_emoji.show(txt, 5, -365);
-    }//GEN-LAST:event_cmdEmojiActionPerformed
+    }
 
-    private void cmdFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdFileActionPerformed
+    private void cmdFileActionPerformed(java.awt.event.ActionEvent evt) {
         try {
             popUp.setVisible(false);
             setFile();
         } catch (Exception e) {
             showStatus("Error : " + e.getMessage());
         }
-    }//GEN-LAST:event_cmdFileActionPerformed
+    }
 
-    private void cmdMicroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdMicroActionPerformed
+    private void cmdMicroActionPerformed(java.awt.event.ActionEvent evt) {
         popMix.show(txt, 170, -90);
-    }//GEN-LAST:event_cmdMicroActionPerformed
+    }
 
-    private void cmdMixMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cmdMixMousePressed
+    private void cmdMixMousePressed(java.awt.event.MouseEvent evt) {
         cmdMix.setBackground(new Color(94, 197, 95));
         cmdMix.setText("Starting");
         Method.getRecoder().captureAudio();
-    }//GEN-LAST:event_cmdMixMousePressed
+    }
 
-    private void cmdMixMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cmdMixMouseReleased
+    private void cmdMixMouseReleased(java.awt.event.MouseEvent evt) {
         try {
             cmdMix.setBackground(new Color(242, 67, 67));
             cmdMix.setText("Start");
@@ -626,17 +631,18 @@ public class Main extends javax.swing.JFrame {
         } catch (Exception e) {
             showStatus("Error : " + e.getMessage());
         }
-    }//GEN-LAST:event_cmdMixMouseReleased
+    }
 
-    private void cmdLogOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdLogOutActionPerformed
+    private void cmdLogOutActionPerformed(java.awt.event.ActionEvent evt) {
         int c = JOptionPane.showConfirmDialog(this, "Are you sure you want to sign out ?", "Sign out", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (c == JOptionPane.YES_OPTION) {
             try {
                 Method.getClient().close();
             } catch (Exception e) {
+                System.out.println(e);
             }
         }
-    }//GEN-LAST:event_cmdLogOutActionPerformed
+    }
 
     private void signOut(String ms) {
         try {
@@ -644,6 +650,7 @@ public class Main extends javax.swing.JFrame {
             String[] v = {ms};
             Login.main(v);
         } catch (Exception e) {
+            System.out.println(e);
         }
     }
 
@@ -921,13 +928,8 @@ public class Main extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
+                 UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
 
@@ -939,7 +941,6 @@ public class Main extends javax.swing.JFrame {
         });
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
     private my_swing.Button cmdEmoji;
     private my_swing.Button cmdFile;
     private my_swing.Button cmdLogOut;
@@ -968,5 +969,4 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JScrollPane spFriend;
     private javax.swing.JScrollPane spGroup;
     private javax.swing.JTextField txt;
-    // End of variables declaration//GEN-END:variables
 }
